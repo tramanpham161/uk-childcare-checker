@@ -1,9 +1,10 @@
 import React from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import Eligibility from './pages/Eligibility';
-import Calculator from './pages/Calculator';
-import FAQ from './pages/FAQ';
+import Home from './pages/Home.tsx';
+import Eligibility from './pages/Eligibility.tsx';
+import Calculator from './pages/Calculator.tsx';
+import FAQ from './pages/FAQ.tsx';
+import About from './pages/About.tsx';
 import { Logo } from './constants';
 
 const Navbar = () => {
@@ -21,6 +22,7 @@ const Navbar = () => {
             <Link to="/" className={`${isActive('/') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>Home</Link>
             <Link to="/eligibility" className={`${isActive('/eligibility') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>Eligibility</Link>
             <Link to="/calculator" className={`${isActive('/calculator') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>Cost Calculator</Link>
+            <Link to="/about" className={`${isActive('/about') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>About</Link>
             <Link to="/faq" className={`${isActive('/faq') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>FAQ</Link>
           </div>
         </div>
@@ -44,6 +46,7 @@ const Footer = () => (
           <ul className="space-y-2">
             <li><Link to="/eligibility" className="hover:text-teal-400">Eligibility Checker</Link></li>
             <li><Link to="/calculator" className="hover:text-teal-400">Cost Calculator</Link></li>
+            <li><Link to="/about" className="hover:text-teal-400">About Us</Link></li>
             <li><Link to="/faq" className="hover:text-teal-400">Common Questions</Link></li>
           </ul>
         </div>
@@ -73,6 +76,7 @@ const App: React.FC = () => {
             <Route path="/eligibility" element={<Eligibility />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
         <Footer />
