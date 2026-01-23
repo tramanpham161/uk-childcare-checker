@@ -1,43 +1,88 @@
 import React from 'react';
+import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import Home from './pages/Home';
+import Eligibility from './pages/Eligibility';
+import Calculator from './pages/Calculator';
+import FAQ from './pages/FAQ';
+import About from './pages/About';
+import { Logo } from './constants';
 
-const About: React.FC = () => {
+const Navbar = () => {
+  const location = useLocation();
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-20">
-      <h1 className="text-4xl font-bold mb-8 text-slate-900 text-center">About Childcare Checker</h1>
-      <div className="prose prose-slate lg:prose-lg mx-auto">
-        <p className="text-lg leading-relaxed text-slate-600 mb-6 text-center">
-          We are an independent service dedicated to helping UK parents navigate the complexity of government childcare support.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16">
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-            <h3 className="text-xl font-bold mb-4 text-teal-700">Our Mission</h3>
-            <p className="text-slate-600">To provide clear, up-to-date, and actionable information about childcare funding, empowering parents to make informed financial decisions for their families.</p>
-          </div>
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-            <h3 className="text-xl font-bold mb-4 text-teal-700">Our Data</h3>
-            <p className="text-slate-600">Our eligibility rules and cost estimates are based on official GOV.UK publications, local authority average rates, and the latest budget announcements from HMRC.</p>
+    <nav className="bg-white border-b sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          <Link to="/">
+            <Logo />
+          </Link>
+          <div className="hidden md:flex space-x-8">
+            <Link to="/" className={`${isActive('/') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>Home</Link>
+            <Link to="/eligibility" className={`${isActive('/eligibility') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>Eligibility</Link>
+            <Link to="/calculator" className={`${isActive('/calculator') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>Cost Calculator</Link>
+            <Link to="/about" className={`${isActive('/about') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>About</Link>
+            <Link to="/faq" className={`${isActive('/faq') ? 'text-teal-600 font-semibold' : 'text-slate-600'} hover:text-teal-600 transition`}>FAQ</Link>
           </div>
         </div>
-
-        <section className="mt-20">
-          <h2 className="text-2xl font-bold mb-6 text-slate-900">Why we built this?</h2>
-          <p className="text-slate-600 mb-4">
-            Childcare costs in the UK are some of the highest in the developed world. While the government offers significant support through various schemes like the 30-hour entitlement and Tax-Free Childcare, many parents find the application process and eligibility rules confusing.
-          </p>
-          <p className="text-slate-600">
-            Childcare Checker was created as a single, friendly point of entry to help you see the big picture of your entitlements and expected outgoings.
-          </p>
-        </section>
-
-        <section className="mt-20 p-10 bg-teal-600 rounded-3xl text-white text-center">
-          <h2 className="text-3xl font-bold mb-4">Questions?</h2>
-          <p className="mb-8 opacity-90">Our team is always here to help clarify the latest funding rules.</p>
-          <a href="mailto:support@childcarechecker.uk" className="bg-white text-teal-700 px-8 py-3 rounded-xl font-bold hover:bg-teal-50 transition">Contact Us</a>
-        </section>
       </div>
-    </div>
+    </nav>
   );
 };
 
-export default About;
+const Footer = () => (
+  <footer className="bg-slate-900 text-slate-300 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="col-span-1 md:col-span-2">
+          <Logo />
+          <p className="mt-4 text-slate-400 max-w-sm">
+            Helping parents in England navigate the complex world of childcare funding. Accurate, impartial, and always free.
+          </p>
+        </div>
+        <div>
+          <h4 className="font-bold text-white mb-4">Quick Links</h4>
+          <ul className="space-y-2">
+            <li><Link to="/eligibility" className="hover:text-teal-400">Eligibility Checker</Link></li>
+            <li><Link to="/calculator" className="hover:text-teal-400">Cost Calculator</Link></li>
+            <li><Link to="/about" className="hover:text-teal-400">About Us</Link></li>
+            <li><Link to="/faq" className="hover:text-teal-400">Common Questions</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold text-white mb-4">Official Sources</h4>
+          <ul className="space-y-2">
+            <li><a href="https://www.gov.uk/free-childcare-if-working" className="hover:text-teal-400" target="_blank">GOV.UK Funding</a></li>
+            <li><a href="https://www.childcarechoices.gov.uk" className="hover:text-teal-400" target="_blank">Childcare Choices</a></li>
+          </ul>
+        </div>
+      </div>
+      <div className="mt-12 pt-8 border-t border-slate-800 text-sm text-center">
+        &copy; {new Date().getFullYear()} Childcare Checker. This is an independent tool for illustrative purposes.
+      </div>
+    </div>
+  </footer>
+);
+
+const App: React.FC = () => {
+  return (
+    <HashRouter>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/eligibility" element={<Eligibility />} />
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </HashRouter>
+  );
+};
+
+export default App;
